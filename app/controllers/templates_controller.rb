@@ -51,9 +51,11 @@ class TemplatesController < ApplicationController
 
   private
 
+  def set_template
+    @template = current_user.templates.find(params[:id])
+  end
+
   def template_params
-    # ストロングパラメーターの設定
-    # items_attributes: [:id, :name, :_destroy] を含めることで、持ち物のデータも許可します
     params.require(:template).permit(:title, :icon_class, :memo, items_attributes: [:id, :name, :_destroy])
   end
 end
