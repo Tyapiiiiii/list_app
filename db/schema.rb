@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_24_054027) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_24_060845) do
   create_table "items", force: :cascade do |t|
     t.integer "template_id", null: false
     t.string "name"
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "is_checked", default: false
     t.index ["template_id"], name: "index_items_on_template_id"
   end
 

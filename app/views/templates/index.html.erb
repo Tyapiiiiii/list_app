@@ -12,7 +12,7 @@
     <ul>
       <% @templates.each do |template| %>
         <li>
-          <strong><%= template.title %></strong> （持ち物: <%= template.items.count %>個）<br>
+          <strong><%= link_to template.title, template_path(template) %></strong> （持ち物: <%= template.items.count %>個）<br>
           <small><%= template.memo %></small>
         </li>
       <% end %>

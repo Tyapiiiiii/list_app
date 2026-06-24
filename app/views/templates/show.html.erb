@@ -1,0 +1,21 @@
+<h1><%= @template.title %> の持ち物チェック</h1>
+<p><%= @template.memo %></p>
+
+<hr>
+
+<div id="items-list">
+  <% @template.items.each do |item| %>
+    <div id="item_<%= item.id %>" style="margin-bottom: 10px; font-size: 18px;">
+      <%= button_to toggle_check_item_path(item), method: :patch, style: "background: none; border: none; cursor: pointer; text-align: left; font-size: 18px;" do %>
+        <% if item.is_checked %>
+          <span style="color: green; font-weight: bold;">☑️ <s><%= item.name %></s></span>
+        <% else %>
+          <span>⬛ <%= item.name %></span>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<hr>
+<p><%= link_to "← 一覧に戻る", root_path %></p>
