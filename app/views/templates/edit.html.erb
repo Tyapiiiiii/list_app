@@ -27,11 +27,13 @@
 
   <div data-controller="sortable">
     <%= form.fields_for :items do |item_form| %>
-      <div class="field" data-id="<%= item_form.object.id %>" style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; display: flex; align-items: center;">
+      <div class="field" style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; display: flex; align-items: center;">
         
         <span class="handle" style="cursor: grab; margin-right: 15px; font-size: 20px; user-select: none;">☰</span>
 
         <div>
+          <%= item_form.hidden_field :position, class: "position-input" %>
+
           <%= item_form.label :name, "持ち物名" %>
           <%= item_form.text_field :name %>
 
