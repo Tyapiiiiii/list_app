@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post '/guest_login', to: 'users/guest_sessions#create'
 
   # templates のルーティング（index, new, create に加えて show も追加）
-  resources :templatesdo
+  resources :templates do
   # テンプレートのルートの中に template_relations をネスト
     resources :template_relations, only: [:create]
   end
