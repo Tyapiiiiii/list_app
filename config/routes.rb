@@ -6,15 +6,13 @@ Rails.application.routes.draw do
   # templates のルーティング（index, new, create に加えて show も追加）
   resources :templates
 
-  # items のチェック切り替え用ルート
+  # 持ち物（アイテム）のルート（チェック切り替えと並び替えを1つに）
   resources :items, only: [] do
     member do
       patch :toggle_check
+      patch :move
     end
   end
 
-  # トップページへのアクセスを templates コントローラーの index アクションに向ける
   root to: "templates#index"
-
-  resources :templates
 end
