@@ -1,6 +1,8 @@
 class TemplatesController < ApplicationController
   # ログインしていないユーザーは、ログイン画面に強制リダイレクトする（Deviseの機能）
   before_action :authenticate_user!
+  # 重複するデータ取得を共通化
+  before_action :set_template, only: [:show, :edit, :update, :destroy]
 
   def index
     # ログインしているユーザーが作ったテンプレートだけを一覧表示する
@@ -26,7 +28,25 @@ class TemplatesController < ApplicationController
   end
 
   def show
-    @template = current_user.templates.find(params[:id])
+    # before_action で @template がセットされるため、ここは空でOK
+  end
+
+  def edit
+    # もし持ち物の入力欄が足りなければ、空の入力欄を1つ足しておく（任意）
+    @template.items.build if @template.items.blank?
+  end
+
+  def update
+    if @template.update(template_params)
+      redirect_to template_path(@template), notice: 'テンプレートを更新しました！'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @template.destroy
+    redirect_to root_path, notice: 'テンプレートを削除しました。', status: :see_other
   end
 
   private

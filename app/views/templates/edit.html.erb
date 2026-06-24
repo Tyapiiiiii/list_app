@@ -1,0 +1,51 @@
+<h1>テンプレートの編集</h1>
+
+<%= form_with(model: @template, local: true) do |form| %>
+  <% if @template.errors.any? %>
+    <div style="color: red;">
+      <h2><%= @template.errors.count %>個のエラーがあります:</h2>
+      <ul>
+        <% @template.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title, "テンプレート名" %><br>
+    <%= form.text_field :title, required: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :memo, "メモ" %><br>
+    <%= form.text_area :memo %>
+  </div>
+
+  <hr>
+  <h3>持ち物リストの編集</h3>
+
+  <%= form.fields_for :items do |item_form| %>
+    <div class="field" style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border: 1px solid #ddd;">
+      <%= item_form.label :name, "持ち物名" %>
+      <%= item_form.text_field :name %>
+
+      <% if item_form.object.persisted? %>
+        <span style="margin-left: 20px; color: red;">
+          <%= item_form.check_box :_destroy %>
+          <%= item_form.label :_destroy, "この持ち物を削除する" %>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
+
+  <hr>
+
+  <div class="actions">
+    <%= form.submit "変更を保存する" %>
+  </div>
+<% end %>
+
+<br>
+<%= link_to "詳細に戻る", template_path(@template) %> |
+<%= link_to "一覧に戻る", root_path %>
