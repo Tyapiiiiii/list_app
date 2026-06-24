@@ -1,2 +1,10 @@
-<h1>Templates#index</h1>
-<p>Find me in app/views/templates/index.html.erb</p>
+<h1>持ち物テンプレート一覧（仮トップページ）</h1>
+
+<% if user_signed_in? %>
+  <p>ログイン中: <%= current_user.name %>（<%= current_user.email %>）</p>
+  <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
+<% else %>
+  <p>ログインしていません</p>
+  <%= link_to "ログイン", new_user_session_path %> |
+  <%= link_to "アカウント新規作成", new_user_registration_path %>
+<% end %>
