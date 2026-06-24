@@ -28,7 +28,8 @@ class TemplatesController < ApplicationController
   end
 
   def show
-    # before_action で @template がセットされるため、ここは空でOK
+    # 詳細画面を開いた瞬間、このテンプレート内のすべての持ち物のチェックを外す（初期化）
+    @template.items.update_all(is_checked: false)
   end
 
   def edit
