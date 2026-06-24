@@ -5,4 +5,6 @@ Rails.application.routes.draw do
 
   # トップページへのアクセスを templates コントローラーの index アクションに向ける
   root to: "templates#index"
+
+  resources :templates
 end
