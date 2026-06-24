@@ -6,5 +6,7 @@
 <% else %>
   <p>ログインしていません</p>
   <%= link_to "ログイン", new_user_session_path %> |
-  <%= link_to "アカウント新規作成", new_user_registration_path %>
+  <%= link_to "アカウント新規作成", new_user_registration_path %> |
+  
+  <%= button_to "ゲストログイン（手軽に試す）", guest_login_path, method: :post %>
 <% end %>
