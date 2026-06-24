@@ -50,7 +50,7 @@
 <hr>
 
 <p>
-  <% if @template.user == current_user %>
+  <% if @template.user == current_user || @template.shared_users.include?(current_user) %>
     <%= link_to "✏️ このテンプレートを編集する", edit_template_path(@template) %> | 
     <%= link_to "🗑️ テンプレートを削除する", template_path(@template), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: red;" %>
   <% end %>
