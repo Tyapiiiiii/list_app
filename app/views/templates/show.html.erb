@@ -1,22 +1,6 @@
 <h1><%= @template.title %> の持ち物チェック</h1>
 <p><%= @template.memo %></p>
 
-<h4>現在のメンバー一覧</h4>
-  <ul>
-    <li>👑 <%= @template.user.email %> (オーナー)</li>
-    <% @template.template_relations.each do |relation| %>
-      <% if relation.persisted? %>
-        <li>
-          <%= relation.user.email %> 
-          (<%= relation.status_i18n || relation.status %>)
-        </li>
-      <% end %>
-    <% end %>
-  </ul>
-<% else %>
-  <p>オーナー: <%= @template.user.email %></p>
-<% end %>
-
 <hr>
 
 <div id="items-list">
@@ -34,7 +18,8 @@
 </div>
 
 <hr>
-<h4>🤝 共同編集メンバーに招待する</h4>
+
+<h3>🤝 共同編集メンバー</h3>
 
 <% if @template.user == current_user %>
   <%= form_with(url: template_template_relations_path(@template), local: true) do |f| %>
@@ -45,10 +30,30 @@
     </div>
   <% end %>
 
+  <h4>現在のメンバー一覧</h4>
+  <ul>
+    <li>👑 <%= @template.user.email %> (オーナー)</li>
+    <% @template.template_relations.each do |relation| %>
+      <% if relation.persisted? %>
+        <li>
+          <%= relation.user.email %> 
+          (<%= relation.status_i18n || relation.status %>)
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+
+<% else %>
+  <p>オーナー: <%= @template.user.email %></p>
+<% end %>
+
 <hr>
+
 <p>
-  <%= link_to "✏️ このテンプレートを編集する", edit_template_path(@template) %> | 
-  <%= link_to "🗑️ テンプレートを削除する", template_path(@template), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: red;" %>
+  <% if @template.user == current_user %>
+    <%= link_to "✏️ このテンプレートを編集する", edit_template_path(@template) %> | 
+    <%= link_to "🗑️ テンプレートを削除する", template_path(@template), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: red;" %>
+  <% end %>
 </p>
 
 <p><%= link_to "← 一覧に戻る", root_path %></p>
