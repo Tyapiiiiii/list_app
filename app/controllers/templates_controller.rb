@@ -5,8 +5,9 @@ class TemplatesController < ApplicationController
   before_action :set_template, only: [:show, :edit, :update, :destroy]
 
   def index
-    # ログインしているユーザーが作ったテンプレートだけを一覧表示する
-    @templates = current_user.templates
+    # 自分が作成したテンプレと、承認済みの共同編集テンプレを両方取得する
+    @templates = Template.where(user_id: current_user.id)
+                         .or(Template.where(id: current_user.shared_templates.pluck(:id)))
   end
 
   def new
@@ -53,7 +54,10 @@ class TemplatesController < ApplicationController
   private
 
   def set_template
-    @template = current_user.templates.find(params[:id])
+    # 閲覧や編集の権限も、「自分が作ったもの」か「承認済み共同編集のもの」だけにする
+    @template = Template.where(user_id: current_user.id)
+                        .or(Template.where(id: current_user.shared_templates.pluck(:id)))
+                        .find(params[:id])
   end
 
   def template_params

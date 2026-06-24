@@ -8,5 +8,11 @@ class Template < ApplicationRecord
   # reject_if: :all_blank は、持ち物名が空欄のまま送られてきたら無視する設定です
   accepts_nested_attributes_for :items, allow_destroy: true, reject_if: :all_blank
 
+  # テンプレートが持つ中間テーブルの関係性
+  has_many :template_relations, dependent: :destroy
 
+  # テンプレートを共同編集しているユーザー一覧（承認済みのみ）
+  has_many :shared_users, -> { where(template_relations: { status: :accepted }) }, 
+           through: :template_relations, 
+           source: :user
 end

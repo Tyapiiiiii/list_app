@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_06_24_060845) do
+ActiveRecord::Schema[7.2].define(version: 2026_06_24_074744) do
   create_table "items", force: :cascade do |t|
     t.integer "template_id", null: false
     t.string "name"
@@ -19,6 +19,17 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_24_060845) do
     t.datetime "updated_at", null: false
     t.boolean "is_checked", default: false
     t.index ["template_id"], name: "index_items_on_template_id"
+  end
+
+  create_table "template_relations", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "template_id", null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["template_id"], name: "index_template_relations_on_template_id"
+    t.index ["user_id", "template_id"], name: "index_template_relations_on_user_id_and_template_id", unique: true
+    t.index ["user_id"], name: "index_template_relations_on_user_id"
   end
 
   create_table "templates", force: :cascade do |t|
@@ -45,5 +56,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_06_24_060845) do
   end
 
   add_foreign_key "items", "templates"
+  add_foreign_key "template_relations", "templates"
+  add_foreign_key "template_relations", "users"
   add_foreign_key "templates", "users"
 end
