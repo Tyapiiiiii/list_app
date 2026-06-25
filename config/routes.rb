@@ -5,8 +5,10 @@ Rails.application.routes.draw do
 
   # templates のルーティング（index, new, create に加えて show も追加）
   resources :templates do
-  # テンプレートのルートの中に template_relations をネスト
     resources :template_relations, only: [:create]
+    member do
+      post :reset
+    end
   end
 
   # 承認と削除はテンプレートの外側で自分のIDをもとに動かす

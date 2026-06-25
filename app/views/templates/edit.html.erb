@@ -49,6 +49,21 @@
   </div>
 
   <hr>
+  <h4>新しい持ち物を追加</h4>
+  <div data-controller="add-item">
+    <div data-add-item-target="container"></div>
+
+    <template data-add-item-target="template">
+      <div class="field" style="margin-bottom: 10px;">
+        <label>持ち物名</label>
+        <input type="text" name="template[items_attributes][NEW_RECORD][name]" placeholder="持ち物名を入力">
+      </div>
+    </template>
+
+    <button type="button" data-action="add-item#add" style="margin-top: 8px;">＋ 持ち物を追加</button>
+  </div>
+
+  <hr>
 
   <div class="actions">
     <%= form.submit "変更を保存する" %>

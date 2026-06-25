@@ -2,7 +2,7 @@ class TemplatesController < ApplicationController
   # ログインしていないユーザーは、ログイン画面に強制リダイレクトする（Deviseの機能）
   before_action :authenticate_user!
   # 重複するデータ取得を共通化
-  before_action :set_template, only: [:show, :edit, :update, :destroy]
+  before_action :set_template, only: [:show, :edit, :update, :destroy, :reset]
 
   def index
     # 自分が作成したテンプレと、承認済みの共同編集テンプレを両方取得する
@@ -29,8 +29,11 @@ class TemplatesController < ApplicationController
   end
 
   def show
-    # 詳細画面を開いた瞬間、このテンプレート内のすべての持ち物のチェックを外す（初期化）
+  end
+
+  def reset
     @template.items.update_all(is_checked: false)
+    redirect_to root_path, notice: 'チェックをリセットしました', status: :see_other
   end
 
   def edit

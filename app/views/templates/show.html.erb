@@ -17,6 +17,11 @@
   <% end %>
 </div>
 
+<div style="margin-top: 16px;">
+  <%= button_to "🔄 リセットして一覧に戻る", reset_template_path(@template), method: :post,
+      data: { turbo_confirm: "すべてのチェックをリセットして一覧に戻りますか？" } %>
+</div>
+
 <hr>
 
 <h3>🤝 共同編集メンバー</h3>
