@@ -57,10 +57,11 @@ class TemplatesController < ApplicationController
   private
 
   def set_template
-    # 閲覧や編集の権限も、「自分が作ったもの」か「承認済み共同編集のもの」だけにする
     @template = Template.where(user_id: current_user.id)
                         .or(Template.where(id: current_user.shared_templates.pluck(:id)))
                         .find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'テンプレートが見つかりません'
   end
 
   def template_params
