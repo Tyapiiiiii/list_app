@@ -20,8 +20,9 @@
 
   <div class="actions">
     <%= f.submit "ログイン" %>
-    <%= button_to "ゲストとしてログイン", guest_login_path, method: :post %>
   </div>
 <% end %>
+
+<%= button_to "ゲストとしてログイン", guest_login_path, method: :post %>
 
 <%= render "devise/shared/links" %>
