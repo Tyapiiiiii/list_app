@@ -18,6 +18,7 @@
   </head>
 
   <body>
+    <%= render "shared/header" if user_signed_in? %>
     <% if notice %>
       <p class="notice" style="color: green;"><%= notice %></p>
     <% end %>

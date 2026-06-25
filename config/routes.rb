@@ -20,5 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :notifications, only: [:index]
+
   root to: "templates#index"
 end
