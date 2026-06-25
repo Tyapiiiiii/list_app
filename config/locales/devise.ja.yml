@@ -1,0 +1,32 @@
+ja:
+  devise:
+    failure:
+      already_authenticated: "すでにログインしています。"
+      unauthenticated: "アカウント登録もしくはログインしてください。"
+      unconfirmed: "メールアドレスの確認手続きを完了してください。"
+      locked: "アカウントがロックされています。"
+      invalid: "メールアドレスまたはパスワードが違います。"
+      last_attempt: "あなたのアカウントがロックされる前に、もう一度お試しいただけます。"
+      timeout: "セッションがタイムアウトしました。もう一度ログインしてください。"
+    sessions:
+      user:
+        signed_in: "ログインしました。"
+        signed_out: "ログアウトしました。"
+        already_signed_out: "既にログアウト済みです。"
+    passwords:
+      send_instructions: "パスワードの再設定方法を記載したメールを数分以内にお送りします。"
+      updated: "パスワードが正しく変更されました。ログインしています。"
+      updated_not_active: "パスワードが正しく変更されました。"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      signed_up_but_inactive: "アカウント登録は完了していますが、確認メールの承認が必要です。"
+      signed_up_but_locked: "アカウント登録は完了していますが、アカウントがロックされています。"
+      signed_up_but_unconfirmed: "本人確認用のメールを送信しました。メール内のリンクから登録を完了させてください。"
+      update_needs_confirmation: "アカウント情報が更新されました。確認メールのリンクから変更を完了させてください。"
+      updated: "アカウント情報が更新されました。"
+      destroyed: "アカウントを削除しました。またのご利用をお待ちしております。"
+    shared:
+      links:
+        sign_in: "ログイン"
+        sign_up: "新規会員登録"
+        forgot_your_password: "パスワードを忘れた場合"
