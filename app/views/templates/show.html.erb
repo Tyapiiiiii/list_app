@@ -23,29 +23,26 @@
 
 <% if @template.user == current_user %>
   <%= form_with(url: template_template_relations_path(@template), local: true) do |f| %>
-    <div class="field">
+    <div class="field" style="margin-bottom: 15px;">
       <%= f.label :email, "招待したいユーザーのメールアドレス" %><br>
       <%= f.email_field :email, placeholder: "example@email.com", required: true %>
       <%= f.submit "招待を送る" %>
     </div>
   <% end %>
+<% end %>
 
 <h4>現在のメンバー一覧</h4>
-  <ul>
-    <li>👑 <%= @template.user.email %> (オーナー)</li>
-    <% @template.template_relations.each do |relation| %>
-      <% if relation.persisted? %>
-        <li>
-          <%= relation.user.email %> 
-          (<%= relation.status_i18n %>)
-        </li>
-      <% end %>
+<ul>
+  <li>👑 <%= @template.user.email %> (オーナー)</li>
+  <% @template.template_relations.each do |relation| %>
+    <% if relation.persisted? %>
+      <li>
+        <%= relation.user.email %> 
+        (<%= t("enums.template_relation.status.#{relation.status}") %>)
+      </li>
     <% end %>
-  </ul>
-
-<% else %>
-  <p>オーナー: <%= @template.user.email %></p>
-<% end %>
+  <% end %>
+</ul>
 
 <hr>
 
