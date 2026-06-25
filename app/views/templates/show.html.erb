@@ -30,14 +30,14 @@
     </div>
   <% end %>
 
-  <h4>現在のメンバー一覧</h4>
+<h4>現在のメンバー一覧</h4>
   <ul>
     <li>👑 <%= @template.user.email %> (オーナー)</li>
     <% @template.template_relations.each do |relation| %>
       <% if relation.persisted? %>
         <li>
           <%= relation.user.email %> 
-          (<%= relation.status_i18n || relation.status %>)
+          (<%= relation.status_i18n %>)
         </li>
       <% end %>
     <% end %>

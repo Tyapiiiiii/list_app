@@ -1,0 +1,7 @@
+ja:
+  enums:
+    template_relation:
+      status:
+        pending: "招待中"
+        accepted: "参加中"
+        rejected: "拒否"
