@@ -5,6 +5,6 @@ class Users::GuestSessionsController < ApplicationController
     # Deviseのメソッドを使って、そのユーザーとしてログイン状態にする
     sign_in user
     # トップページへリダイレクト
-    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました！'
+    redirect_to root_path, notice: 'ゲストユーザーとしてログインしました！', status: :see_other
   end
 end

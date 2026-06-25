@@ -14,10 +14,11 @@ class User < ApplicationRecord
            source: :template
 
     def self.guest
-    # ゲスト用のメールアドレスで検索し、なければ新しく作成する
-    find_or_create_by!(email: 'guest@example.com') do |user|
-      user.password = SecureRandom.urlsafe_base64
-      user.name = 'ゲストユーザー'
+    user = find_or_create_by!(email: 'guest@example.com') do |u|
+      u.password = SecureRandom.urlsafe_base64
+      u.name = 'ゲスト'
     end
+    user.update_columns(name: 'ゲスト') if user.name != 'ゲスト'
+    user
   end
 end
