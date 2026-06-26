@@ -14,10 +14,12 @@
   <div class="template-cards">
     <% @templates.each do |template| %>
       <%= link_to template_path(template), class: "template-card" do %>
-        <div class="template-card-icon">
-          <i class="<%= template.icon_class.presence || 'fa-solid fa-list' %>"></i>
+        <div class="template-card-header">
+          <div class="template-card-icon">
+            <i class="<%= template.icon_class.presence || 'fa-solid fa-list' %>"></i>
+          </div>
+          <div class="template-card-title"><%= template.title %></div>
         </div>
-        <div class="template-card-title"><%= template.title %></div>
         <div class="template-card-meta">持ち物: <%= template.items.count %>個</div>
         <% if template.memo.present? %>
           <div class="template-card-memo"><%= template.memo %></div>

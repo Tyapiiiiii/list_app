@@ -8,6 +8,7 @@
       </span>
       <ul class="dropdown-menu" data-dropdown-target="menu" hidden>
         <li><%= link_to "通知", notifications_path %></li>
+        <li><%= link_to "テンプレート一覧", templates_path %></li>
         <li><%= link_to "アカウント情報", edit_user_registration_path %></li>
         <li class="logout-item">
           <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>

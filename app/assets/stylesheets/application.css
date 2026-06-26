@@ -267,8 +267,9 @@ textarea { min-height: 80px; resize: vertical; }
   color: inherit;
 }
 .template-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.18); text-decoration: none; }
-.template-card-icon { font-size: 28px; color: #5f6368; }
-.template-card-title { font-size: 16px; font-weight: 600; color: #333; }
+.template-card-header { display: flex; align-items: center; gap: 12px; }
+.template-card-icon { font-size: 28px; color: #5f6368; flex-shrink: 0; }
+.template-card-title { font-size: 19px; font-weight: 600; color: #333; }
 .template-card-meta { font-size: 13px; color: #5f6368; }
 .template-card-memo { font-size: 13px; color: #888; }
 .empty-state { color: #888; font-size: 15px; padding: 24px 0; }

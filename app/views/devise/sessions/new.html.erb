@@ -20,14 +20,11 @@
         </div>
       <% end %>
 
-      <div class="actions">
+      <div class="actions" style="display: flex; gap: 12px; align-items: center;">
         <%= f.submit "ログイン", class: "btn" %>
+        <%= button_to "ゲストとしてログイン", guest_login_path, method: :post, class: "btn btn-outline" %>
       </div>
     <% end %>
-
-    <div style="margin-top: 16px;">
-      <%= button_to "ゲストとしてログイン", guest_login_path, method: :post, class: "btn btn-outline" %>
-    </div>
 
     <div style="margin-top: 20px; font-size: 13px;">
       <%= render "devise/shared/links" %>
