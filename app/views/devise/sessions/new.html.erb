@@ -2,7 +2,7 @@
   <div class="form-card">
     <h1>ログイン</h1>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { id: "login-form" }) do |f| %>
       <div class="field">
         <%= f.label :email %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
@@ -19,12 +19,12 @@
           <%= f.label :remember_me %>
         </div>
       <% end %>
-
-      <div class="actions" style="display: flex; gap: 12px; align-items: center;">
-        <%= f.submit "ログイン", class: "btn" %>
-        <%= button_to "ゲストとしてログイン", guest_login_path, method: :post, class: "btn btn-outline" %>
-      </div>
     <% end %>
+
+    <div class="actions" style="display: flex; gap: 12px; align-items: center;">
+      <input type="submit" form="login-form" value="ログイン" class="btn">
+      <%= button_to "ゲストとしてログイン", guest_login_path, method: :post, class: "btn btn-outline" %>
+    </div>
 
     <div style="margin-top: 20px; font-size: 13px;">
       <%= render "devise/shared/links" %>
