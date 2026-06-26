@@ -7,8 +7,35 @@
 
 <div class="page-header">
   <h1>持ち物テンプレート一覧</h1>
+  <div id="weather-widget" class="weather-widget" style="display:none;"></div>
   <%= link_to "＋ 新規作成", new_template_path, class: "btn" %>
 </div>
+
+<script>
+  const WEATHER_API_KEY = "<%= Rails.application.credentials.dig(:openweathermap, :api_key) %>";
+  const WEATHER_MAP = {
+    Clear: "晴れ☀️", Clouds: "くもり☁️", Rain: "雨🌧️",
+    Drizzle: "小雨🌦️", Thunderstorm: "雷雨⛈️", Snow: "雪❄️",
+    Mist: "霧🌫️", Fog: "霧🌫️", Haze: "霞🌫️"
+  };
+
+  if (WEATHER_API_KEY && navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      const { latitude: lat, longitude: lon } = pos.coords;
+      fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=metric`)
+        .then(r => r.json())
+        .then(data => {
+          const condition = data?.weather?.[0]?.main;
+          const label = WEATHER_MAP[condition] || condition;
+          const widget = document.getElementById("weather-widget");
+          if (label && widget) {
+            widget.textContent = `今日の天気：${label}`;
+            widget.style.display = "";
+          }
+        });
+    });
+  }
+</script>
 
 <% if @templates.any? %>
   <div class="template-cards">

@@ -248,6 +248,17 @@ textarea { min-height: 80px; resize: vertical; }
 }
 .page-header h1 { margin: 0; }
 
+/* ===== Weather Widget ===== */
+.weather-widget {
+  font-size: 15px;
+  color: #5f6368;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 20px;
+  padding: 6px 14px;
+  white-space: nowrap;
+}
+
 /* ===== Template Cards ===== */
 .template-cards {
   display: grid;
