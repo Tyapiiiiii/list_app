@@ -51,7 +51,7 @@ header {
   justify-content: space-between;
 }
 .logo {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   color: #333;
   text-decoration: none;
@@ -61,7 +61,7 @@ header {
 /* Dropdown */
 .nav-user { position: relative; }
 .nav-user > span {
-  font-size: 14px;
+  font-size: 17px;
   color: #333;
   cursor: pointer;
   padding: 6px 12px;
