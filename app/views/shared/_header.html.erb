@@ -1,16 +1,18 @@
 <header>
-  <%= link_to "List App", root_path %>
+  <div class="header-inner">
+    <%= link_to "List App", root_path, class: "logo" %>
 
-  <div data-controller="dropdown">
-    <span data-action="click->dropdown#toggle" style="cursor: pointer;">
-      <%= current_user.name %>
-    </span>
-    <ul data-dropdown-target="menu" hidden>
-      <li><%= link_to "通知", notifications_path %></li>
-      <li><%= link_to "アカウント情報", edit_user_registration_path %></li>
-      <li>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
-      </li>
-    </ul>
+    <div class="nav-user" data-controller="dropdown">
+      <span data-action="click->dropdown#toggle">
+        <%= current_user.name %>
+      </span>
+      <ul class="dropdown-menu" data-dropdown-target="menu" hidden>
+        <li><%= link_to "通知", notifications_path %></li>
+        <li><%= link_to "アカウント情報", edit_user_registration_path %></li>
+        <li class="logout-item">
+          <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
+        </li>
+      </ul>
+    </div>
   </div>
 </header>

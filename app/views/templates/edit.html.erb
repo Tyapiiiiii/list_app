@@ -1,99 +1,98 @@
-<h1>テンプレートの編集</h1>
+<div class="form-card form-card--wide">
+  <h1>テンプレートの編集</h1>
 
-<%= form_with(model: @template, local: true) do |form| %>
-  <% if @template.errors.any? %>
-    <div style="color: red;">
-      <h2><%= @template.errors.count %>個のエラーがあります:</h2>
-      <ul>
-        <% @template.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+  <%= form_with(model: @template, local: true) do |form| %>
+    <% if @template.errors.any? %>
+      <div class="error-box">
+        <h2><%= @template.errors.count %>個のエラーがあります</h2>
+        <ul>
+          <% @template.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :title, "テンプレート名" %>
+      <%= form.text_field :title, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :memo, "メモ" %>
+      <%= form.text_area :memo %>
+    </div>
+
+    <div class="field">
+      <label>アイコンを選択</label>
+      <div class="icon-selector">
+        <% [
+          { cls: "fa-solid fa-briefcase",      label: "仕事" },
+          { cls: "fa-solid fa-dumbbell",        label: "ジム" },
+          { cls: "fa-solid fa-plane",           label: "旅行" },
+          { cls: "fa-solid fa-house",           label: "自宅" },
+          { cls: "fa-solid fa-bag-shopping",    label: "買い物" },
+          { cls: "fa-solid fa-graduation-cap",  label: "学校" },
+          { cls: "fa-solid fa-camera",          label: "撮影" },
+          { cls: "fa-solid fa-car",             label: "ドライブ" },
+          { cls: "fa-solid fa-bicycle",         label: "自転車" },
+          { cls: "fa-solid fa-heart",           label: "お気に入り" }
+        ].each do |icon| %>
+          <label class="icon-option">
+            <%= form.radio_button :icon_class, icon[:cls] %>
+            <i class="<%= icon[:cls] %>"></i>
+            <small><%= icon[:label] %></small>
+          </label>
         <% end %>
-      </ul>
+      </div>
+    </div>
+
+    <hr>
+    <h3>持ち物リストの編集（ドラッグして並び替えできます）</h3>
+
+    <div data-controller="sortable">
+      <%= form.fields_for :items do |item_form| %>
+        <div class="sortable-item">
+          <span class="handle">☰</span>
+          <div style="flex: 1;">
+            <%= item_form.hidden_field :position, class: "position-input" %>
+            <%= item_form.label :name, "持ち物名" %>
+            <%= item_form.text_field :name %>
+            <% if item_form.object.persisted? %>
+              <span class="text-danger">
+                <%= item_form.check_box :_destroy %>
+                <%= item_form.label :_destroy, "削除する" %>
+              </span>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <hr>
+    <h4>新しい持ち物を追加</h4>
+    <div data-controller="add-item">
+      <div data-add-item-target="container"></div>
+
+      <template data-add-item-target="template">
+        <div class="field">
+          <label>持ち物名</label>
+          <input type="text" name="template[items_attributes][NEW_RECORD][name]" placeholder="持ち物名を入力">
+        </div>
+      </template>
+
+      <button type="button" data-action="add-item#add" class="btn btn-outline btn-sm">＋ 持ち物を追加</button>
+    </div>
+
+    <hr>
+
+    <div class="actions">
+      <%= form.submit "変更を保存する", class: "btn" %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title, "テンプレート名" %><br>
-    <%= form.text_field :title, required: true %>
+  <div style="margin-top: 16px; display: flex; gap: 12px;">
+    <%= link_to "← 詳細に戻る", template_path(@template) %>
+    <%= link_to "一覧に戻る", root_path %>
   </div>
-
-  <div class="field">
-    <%= form.label :memo, "メモ" %><br>
-    <%= form.text_area :memo %>
-  </div>
-
-  <div class="field">
-    <label>アイコンを選択</label>
-    <div class="icon-selector">
-      <% [
-        { cls: "fa-solid fa-briefcase",      label: "仕事" },
-        { cls: "fa-solid fa-dumbbell",        label: "ジム" },
-        { cls: "fa-solid fa-plane",           label: "旅行" },
-        { cls: "fa-solid fa-house",           label: "自宅" },
-        { cls: "fa-solid fa-bag-shopping",    label: "買い物" },
-        { cls: "fa-solid fa-graduation-cap",  label: "学校" },
-        { cls: "fa-solid fa-camera",          label: "撮影" },
-        { cls: "fa-solid fa-car",             label: "ドライブ" },
-        { cls: "fa-solid fa-bicycle",         label: "自転車" },
-        { cls: "fa-solid fa-heart",           label: "お気に入り" }
-      ].each do |icon| %>
-        <label class="icon-option">
-          <%= form.radio_button :icon_class, icon[:cls] %>
-          <i class="<%= icon[:cls] %>"></i>
-          <small><%= icon[:label] %></small>
-        </label>
-      <% end %>
-    </div>
-  </div>
-
-  <hr>
-  <h3>持ち物リストの編集（ドラッグして並び替えできます）</h3>
-
-  <div data-controller="sortable">
-    <%= form.fields_for :items do |item_form| %>
-      <div class="field" style="margin-bottom: 15px; background: #f9f9f9; padding: 10px; border: 1px solid #ddd; display: flex; align-items: center;">
-        
-        <span class="handle" style="cursor: grab; margin-right: 15px; font-size: 20px; user-select: none;">☰</span>
-
-        <div>
-          <%= item_form.hidden_field :position, class: "position-input" %>
-
-          <%= item_form.label :name, "持ち物名" %>
-          <%= item_form.text_field :name %>
-
-          <% if item_form.object.persisted? %>
-            <span style="margin-left: 20px; color: red;">
-              <%= item_form.check_box :_destroy %>
-              <%= item_form.label :_destroy, "この持ち物を削除する" %>
-            </span>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-
-  <hr>
-  <h4>新しい持ち物を追加</h4>
-  <div data-controller="add-item">
-    <div data-add-item-target="container"></div>
-
-    <template data-add-item-target="template">
-      <div class="field" style="margin-bottom: 10px;">
-        <label>持ち物名</label>
-        <input type="text" name="template[items_attributes][NEW_RECORD][name]" placeholder="持ち物名を入力">
-      </div>
-    </template>
-
-    <button type="button" data-action="add-item#add" style="margin-top: 8px;">＋ 持ち物を追加</button>
-  </div>
-
-  <hr>
-
-  <div class="actions">
-    <%= form.submit "変更を保存する" %>
-  </div>
-<% end %>
-
-<br>
-<%= link_to "詳細に戻る", template_path(@template) %> |
-<%= link_to "一覧に戻る", root_path %>
+</div>

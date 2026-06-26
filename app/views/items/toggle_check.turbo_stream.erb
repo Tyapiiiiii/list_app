@@ -1,11 +1,11 @@
 <%= turbo_stream.replace "item_#{@item.id}" do %>
-  <div id="item_<%= @item.id %>" style="margin-bottom: 10px; font-size: 18px;">
-    <%= button_to toggle_check_item_path(@item), method: :patch, style: "background: none; border: none; cursor: pointer; text-align: left; font-size: 18px;" do %>
+  <li id="item_<%= @item.id %>" class="check-item">
+    <%= button_to toggle_check_item_path(@item), method: :patch do %>
       <% if @item.is_checked %>
-        <span style="color: green; font-weight: bold;">☑️ <s><%= @item.name %></s></span>
+        <span class="check-item--checked">☑ <%= @item.name %></span>
       <% else %>
-        <span>⬛ <%= @item.name %></span>
+        <span>☐ <%= @item.name %></span>
       <% end %>
     <% end %>
-  </div>
+  </li>
 <% end %>

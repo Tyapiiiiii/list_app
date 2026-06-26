@@ -1,64 +1,73 @@
-<h1>
-  <i class="<%= @template.icon_class.presence || 'fa-solid fa-list' %>"></i>
-  <%= @template.title %> の持ち物チェック
-</h1>
-<p><%= @template.memo %></p>
-
-<hr>
-
-<div id="items-list">
-  <% @template.items.each do |item| %>
-    <div id="item_<%= item.id %>" style="margin-bottom: 10px; font-size: 18px;">
-      <%= button_to toggle_check_item_path(item), method: :patch, style: "background: none; border: none; cursor: pointer; text-align: left; font-size: 18px;" do %>
-        <% if item.is_checked %>
-          <span style="color: green; font-weight: bold;">☑️ <s><%= item.name %></s></span>
-        <% else %>
-          <span>⬛ <%= item.name %></span>
-        <% end %>
-      <% end %>
-    </div>
-  <% end %>
+<div class="page-header">
+  <h1>
+    <i class="<%= @template.icon_class.presence || 'fa-solid fa-list' %>"></i>
+    <%= @template.title %>
+  </h1>
+  <div style="display: flex; gap: 8px;">
+    <% if @template.user == current_user || @template.shared_users.include?(current_user) %>
+      <%= link_to "編集", edit_template_path(@template), class: "btn btn-sm btn-outline" %>
+      <%= button_to "削除", template_path(@template),
+          method: :delete,
+          data: { turbo_confirm: "本当に削除しますか？" },
+          class: "btn btn-sm btn-danger" %>
+    <% end %>
+  </div>
 </div>
 
-<div style="margin-top: 16px;">
-  <%= button_to "🔄 リセットして一覧に戻る", reset_template_path(@template), method: :post,
-      data: { turbo_confirm: "すべてのチェックをリセットして一覧に戻りますか？" } %>
-</div>
-
-<hr>
-
-<h3>🤝 共同編集メンバー</h3>
-
-<% if @template.user == current_user %>
-  <%= form_with(url: template_template_relations_path(@template), local: true) do |f| %>
-    <div class="field" style="margin-bottom: 15px;">
-      <%= f.label :email, "招待したいユーザーのメールアドレス" %><br>
-      <%= f.email_field :email, placeholder: "example@email.com", required: true %>
-      <%= f.submit "招待を送る" %>
-    </div>
-  <% end %>
+<% if @template.memo.present? %>
+  <p style="color: #666; margin-bottom: 20px;"><%= @template.memo %></p>
 <% end %>
 
-<h4>現在のメンバー一覧</h4>
-<ul>
-  <li>👑 <%= @template.user.email %> (オーナー)</li>
-  <% @template.template_relations.each do |relation| %>
-    <% if relation.persisted? %>
-      <li>
-        <%= relation.user.email %> 
-        (<%= t("enums.template_relation.status.#{relation.status}") %>)
+<div class="section-card">
+  <ul class="check-list">
+    <% @template.items.each do |item| %>
+      <li id="item_<%= item.id %>" class="check-item">
+        <%= button_to toggle_check_item_path(item), method: :patch do %>
+          <% if item.is_checked %>
+            <span class="check-item--checked">☑ <%= item.name %></span>
+          <% else %>
+            <span>☐ <%= item.name %></span>
+          <% end %>
+        <% end %>
       </li>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+</div>
+
+<div style="margin-bottom: 24px;">
+  <%= button_to "リセットして一覧に戻る", reset_template_path(@template), method: :post,
+      data: { turbo_confirm: "すべてのチェックをリセットして一覧に戻りますか？" },
+      class: "btn" %>
+</div>
 
 <hr>
 
-<p>
-  <% if @template.user == current_user || @template.shared_users.include?(current_user) %>
-    <%= link_to "✏️ このテンプレートを編集する", edit_template_path(@template) %> | 
-    <%= link_to "🗑️ テンプレートを削除する", template_path(@template), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, style: "color: red;" %>
-  <% end %>
-</p>
+<div class="section-card">
+  <h3>共同編集メンバー</h3>
 
-<p><%= link_to "← 一覧に戻る", root_path %></p>
+  <% if @template.user == current_user %>
+    <%= form_with(url: template_template_relations_path(@template), local: true) do |f| %>
+      <div class="field">
+        <%= f.label :email, "招待したいユーザーのメールアドレス" %>
+        <div style="display: flex; gap: 8px;">
+          <%= f.email_field :email, placeholder: "example@email.com", required: true, style: "flex: 1;" %>
+          <%= f.submit "招待を送る", class: "btn btn-sm" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <ul class="member-list">
+    <li>👑 <%= @template.user.email %> (オーナー)</li>
+    <% @template.template_relations.each do |relation| %>
+      <% if relation.persisted? %>
+        <li>
+          <%= relation.user.email %>
+          (<%= t("enums.template_relation.status.#{relation.status}") %>)
+        </li>
+      <% end %>
+    <% end %>
+  </ul>
+</div>
+
+<%= link_to "← 一覧に戻る", root_path %>

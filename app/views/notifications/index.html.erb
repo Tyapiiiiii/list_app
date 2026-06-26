@@ -1,21 +1,31 @@
 <h1>通知</h1>
 
 <% if @pending_invitations.any? %>
-  <ul>
-    <% @pending_invitations.each do |relation| %>
-      <li style="margin-bottom: 15px;">
-        <strong><%= relation.template.user.email %></strong> さんから
-        「<strong><%= relation.template.title %></strong>」への共同編集の招待
-        <div style="margin-top: 5px;">
-          <%= button_to "承認する", template_relation_path(relation), method: :patch,
-              style: "background-color: #28a745; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer; margin-right: 5px;" %>
-          <%= button_to "辞退する", template_relation_path(relation), method: :delete,
-              data: { turbo_confirm: "本当に辞退しますか？" },
-              style: "background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 3px; cursor: pointer;" %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
+  <table class="notification-table">
+    <thead>
+      <tr>
+        <th>送信者</th>
+        <th>テンプレート</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pending_invitations.each do |relation| %>
+        <tr>
+          <td><%= relation.template.user.email %></td>
+          <td><%= relation.template.title %></td>
+          <td>
+            <div class="action-cell">
+              <%= button_to "承認する", template_relation_path(relation), method: :patch, class: "btn btn-sm" %>
+              <%= button_to "辞退する", template_relation_path(relation), method: :delete,
+                  data: { turbo_confirm: "本当に辞退しますか？" },
+                  class: "btn btn-sm btn-danger" %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 <% else %>
-  <p>通知はありません。</p>
+  <p class="empty-state">通知はありません。</p>
 <% end %>

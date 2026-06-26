@@ -1,78 +1,81 @@
-<h1>新しいテンプレートの作成</h1>
+<div class="form-card form-card--wide">
+  <h1>新しいテンプレートの作成</h1>
 
-<%= form_with(model: @template, local: true) do |form| %>
-  <% if @template.errors.any? %>
-    <div style="color: red;">
-      <h2><%= @template.errors.count %>個のエラーがあります:</h2>
-      <ul>
-        <% @template.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+  <%= form_with(model: @template, local: true) do |form| %>
+    <% if @template.errors.any? %>
+      <div class="error-box">
+        <h2><%= @template.errors.count %>個のエラーがあります</h2>
+        <ul>
+          <% @template.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :title, "テンプレート名（例：会社、ジム、旅行）" %>
+      <%= form.text_field :title, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :memo, "メモ（任意）" %>
+      <%= form.text_area :memo %>
+    </div>
+
+    <div class="field">
+      <label>アイコンを選択</label>
+      <div class="icon-selector">
+        <% [
+          { cls: "fa-solid fa-briefcase",      label: "仕事" },
+          { cls: "fa-solid fa-dumbbell",        label: "ジム" },
+          { cls: "fa-solid fa-plane",           label: "旅行" },
+          { cls: "fa-solid fa-house",           label: "自宅" },
+          { cls: "fa-solid fa-bag-shopping",    label: "買い物" },
+          { cls: "fa-solid fa-graduation-cap",  label: "学校" },
+          { cls: "fa-solid fa-camera",          label: "撮影" },
+          { cls: "fa-solid fa-car",             label: "ドライブ" },
+          { cls: "fa-solid fa-bicycle",         label: "自転車" },
+          { cls: "fa-solid fa-heart",           label: "お気に入り" }
+        ].each do |icon| %>
+          <label class="icon-option">
+            <%= form.radio_button :icon_class, icon[:cls] %>
+            <i class="<%= icon[:cls] %>"></i>
+            <small><%= icon[:label] %></small>
+          </label>
         <% end %>
-      </ul>
+      </div>
+    </div>
+
+    <hr>
+    <h3>持ち物リスト</h3>
+
+    <div data-controller="add-item">
+      <div data-add-item-target="container">
+        <%= form.fields_for :items do |item_form| %>
+          <div class="field">
+            <%= item_form.label :name, "持ち物名" %>
+            <%= item_form.text_field :name %>
+          </div>
+        <% end %>
+      </div>
+
+      <template data-add-item-target="template">
+        <div class="field">
+          <label>持ち物名</label>
+          <input type="text" name="template[items_attributes][NEW_RECORD][name]" placeholder="持ち物名を入力">
+        </div>
+      </template>
+
+      <button type="button" data-action="add-item#add" class="btn btn-outline btn-sm">＋ 持ち物を追加</button>
+    </div>
+
+    <hr>
+
+    <div class="actions">
+      <%= form.submit "テンプレートを保存する", class: "btn" %>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :title, "テンプレート名（例：会社、ジム、旅行）" %><br>
-    <%= form.text_field :title, required: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label :memo, "メモ（任意）" %><br>
-    <%= form.text_area :memo %>
-  </div>
-
-  <div class="field">
-    <label>アイコンを選択</label>
-    <div class="icon-selector">
-      <% [
-        { cls: "fa-solid fa-briefcase",      label: "仕事" },
-        { cls: "fa-solid fa-dumbbell",        label: "ジム" },
-        { cls: "fa-solid fa-plane",           label: "旅行" },
-        { cls: "fa-solid fa-house",           label: "自宅" },
-        { cls: "fa-solid fa-bag-shopping",    label: "買い物" },
-        { cls: "fa-solid fa-graduation-cap",  label: "学校" },
-        { cls: "fa-solid fa-camera",          label: "撮影" },
-        { cls: "fa-solid fa-car",             label: "ドライブ" },
-        { cls: "fa-solid fa-bicycle",         label: "自転車" },
-        { cls: "fa-solid fa-heart",           label: "お気に入り" }
-      ].each do |icon| %>
-        <label class="icon-option">
-          <%= form.radio_button :icon_class, icon[:cls] %>
-          <i class="<%= icon[:cls] %>"></i>
-          <small><%= icon[:label] %></small>
-        </label>
-      <% end %>
-    </div>
-  </div>
-
-  <hr>
-  <h3>持ち物リスト</h3>
-
-  <div data-controller="add-item">
-    <div data-add-item-target="container">
-      <%= form.fields_for :items do |item_form| %>
-        <div class="field" style="margin-bottom: 10px;">
-          <%= item_form.label :name, "持ち物名" %>
-          <%= item_form.text_field :name %>
-        </div>
-      <% end %>
-    </div>
-
-    <template data-add-item-target="template">
-      <div class="field" style="margin-bottom: 10px;">
-        <label>持ち物名</label>
-        <input type="text" name="template[items_attributes][NEW_RECORD][name]" placeholder="持ち物名を入力">
-      </div>
-    </template>
-
-    <button type="button" data-action="add-item#add" style="margin-top: 8px;">＋ 持ち物を追加</button>
-  </div>
-  <hr>
-
-  <div class="actions">
-    <%= form.submit "テンプレートを保存する" %>
-  </div>
-<% end %>
-
-<%= link_to "戻る", root_path %>
+  <%= link_to "← 戻る", root_path %>
+</div>

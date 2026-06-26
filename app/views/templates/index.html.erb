@@ -1,38 +1,30 @@
 <% if current_user.template_relations.where(status: :pending).exists? %>
-  <div style="background-color: #fff3cd; border: 1px solid #ffeeba; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
-    <p style="margin: 0; color: #856404;">
-      📩 共同編集の招待が届いています ―
-      <%= link_to "通知を確認する", notifications_path, style: "color: #856404; font-weight: bold;" %>
-    </p>
+  <div class="alert-banner">
+    📩 共同編集の招待が届いています ―
+    <%= link_to "通知を確認する", notifications_path %>
   </div>
 <% end %>
 
-<h1>持ち物テンプレート一覧（仮トップページ）</h1>
+<div class="page-header">
+  <h1>持ち物テンプレート一覧</h1>
+  <%= link_to "＋ 新規作成", new_template_path, class: "btn" %>
+</div>
 
-<% if user_signed_in? %>
-  <p>ログイン中: <%= current_user.name %>（<%= current_user.email %>）</p>
-
-  <hr>
-  <p><%= link_to "＋ 新しいテンプレートを作る", new_template_path %></p>
-
-  <h3>あなたのテンプレート一覧</h3>
-  <% if @templates.any? %>
-    <ul>
-      <% @templates.each do |template| %>
-        <li>
+<% if @templates.any? %>
+  <div class="template-cards">
+    <% @templates.each do |template| %>
+      <%= link_to template_path(template), class: "template-card" do %>
+        <div class="template-card-icon">
           <i class="<%= template.icon_class.presence || 'fa-solid fa-list' %>"></i>
-          <strong><%= link_to template.title, template_path(template) %></strong> （持ち物: <%= template.items.count %>個）<br>
-          <small><%= template.memo %></small>
-        </li>
+        </div>
+        <div class="template-card-title"><%= template.title %></div>
+        <div class="template-card-meta">持ち物: <%= template.items.count %>個</div>
+        <% if template.memo.present? %>
+          <div class="template-card-memo"><%= template.memo %></div>
+        <% end %>
       <% end %>
-    </ul>
-  <% else %>
-    <p>まだテンプレートがありません。</p>
-  <% end %>
-
+    <% end %>
+  </div>
 <% else %>
-  <p>ログインしていません</p>
-  <%= link_to "ログイン", new_user_session_path %> |
-  <%= link_to "アカウント新規作成", new_user_registration_path %> |
-  <%= button_to "ゲストログイン（手軽に試す）", guest_login_path, method: :post %>
+  <p class="empty-state">まだテンプレートがありません。</p>
 <% end %>
