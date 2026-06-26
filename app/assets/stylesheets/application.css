@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+.icon-selector { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.icon-option { display: flex; flex-direction: column; align-items: center; cursor: pointer; padding: 8px; border: 2px solid #ddd; border-radius: 8px; min-width: 60px; }
+.icon-option input[type="radio"] { display: none; }
+.icon-option:has(input[type="radio"]:checked) { border-color: #333; background: #f0f0f0; }
+.icon-option i { font-size: 24px; margin-bottom: 4px; }
+.icon-option small { font-size: 11px; }

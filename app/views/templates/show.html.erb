@@ -1,4 +1,7 @@
-<h1><%= @template.title %> の持ち物チェック</h1>
+<h1>
+  <i class="<%= @template.icon_class.presence || 'fa-solid fa-list' %>"></i>
+  <%= @template.title %> の持ち物チェック
+</h1>
 <p><%= @template.memo %></p>
 
 <hr>

@@ -21,6 +21,7 @@
     <ul>
       <% @templates.each do |template| %>
         <li>
+          <i class="<%= template.icon_class.presence || 'fa-solid fa-list' %>"></i>
           <strong><%= link_to template.title, template_path(template) %></strong> （持ち物: <%= template.items.count %>個）<br>
           <small><%= template.memo %></small>
         </li>

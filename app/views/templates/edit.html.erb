@@ -22,6 +22,30 @@
     <%= form.text_area :memo %>
   </div>
 
+  <div class="field">
+    <label>アイコンを選択</label>
+    <div class="icon-selector">
+      <% [
+        { cls: "fa-solid fa-briefcase",      label: "仕事" },
+        { cls: "fa-solid fa-dumbbell",        label: "ジム" },
+        { cls: "fa-solid fa-plane",           label: "旅行" },
+        { cls: "fa-solid fa-house",           label: "自宅" },
+        { cls: "fa-solid fa-bag-shopping",    label: "買い物" },
+        { cls: "fa-solid fa-graduation-cap",  label: "学校" },
+        { cls: "fa-solid fa-camera",          label: "撮影" },
+        { cls: "fa-solid fa-car",             label: "ドライブ" },
+        { cls: "fa-solid fa-bicycle",         label: "自転車" },
+        { cls: "fa-solid fa-heart",           label: "お気に入り" }
+      ].each do |icon| %>
+        <label class="icon-option">
+          <%= form.radio_button :icon_class, icon[:cls] %>
+          <i class="<%= icon[:cls] %>"></i>
+          <small><%= icon[:label] %></small>
+        </label>
+      <% end %>
+    </div>
+  </div>
+
   <hr>
   <h3>持ち物リストの編集（ドラッグして並び替えできます）</h3>
 

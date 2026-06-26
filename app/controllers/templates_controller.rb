@@ -66,8 +66,9 @@ class TemplatesController < ApplicationController
 
   def template_params
    params.require(:template).permit(
-      :title, 
-      :memo, 
+      :title,
+      :memo,
+      :icon_class,
       items_attributes: [:id, :name, :position, :_destroy]
     )
   end
