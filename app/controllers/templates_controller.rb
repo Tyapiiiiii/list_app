@@ -69,7 +69,7 @@ class TemplatesController < ApplicationController
       :title,
       :memo,
       :icon_class,
-      items_attributes: [:id, :name, :position, :_destroy]
+      items_attributes: [:id, :name, :_destroy]
     )
   end
 end
