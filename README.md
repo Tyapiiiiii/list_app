@@ -142,38 +142,39 @@ https://github.com/Tyapiiiiii/list_app
 ## ER 図
 
 ```mermaid
+%%{init: {'theme': 'neutral', 'er': {'layoutDirection': 'TB'}}}%%
 erDiagram
     users {
-        integer id PK
-        string name
-        string email
-        string encrypted_password
+        integer  id                PK
+        string   name              "ユーザー名"
+        string   email             "メールアドレス"
+        string   encrypted_password "パスワード(暗号化)"
         datetime created_at
         datetime updated_at
     }
     templates {
-        integer id PK
-        integer user_id FK
-        string title
-        string icon_class
-        text memo
+        integer  id          PK
+        integer  user_id     FK "オーナー"
+        string   title       "タイトル"
+        string   icon_class  "アイコン"
+        text     memo        "メモ"
         datetime created_at
         datetime updated_at
     }
     items {
-        integer id PK
-        integer template_id FK
-        string name
-        integer position
-        boolean is_checked
+        integer  id          PK
+        integer  template_id FK "所属テンプレート"
+        string   name        "アイテム名"
+        integer  position    "並び順"
+        boolean  is_checked  "チェック状態"
         datetime created_at
         datetime updated_at
     }
     template_relations {
-        integer id PK
-        integer user_id FK
-        integer template_id FK
-        integer status "0:pending 1:accepted 2:rejected"
+        integer  id          PK
+        integer  user_id     FK "招待されたユーザー"
+        integer  template_id FK "共有テンプレート"
+        integer  status      "0:pending 1:accepted 2:rejected"
         datetime created_at
         datetime updated_at
     }

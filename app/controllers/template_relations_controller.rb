@@ -35,7 +35,7 @@ class TemplateRelationsController < ApplicationController
     end
   end
 
-  # 招待を「拒否」または「解除」するアクション
+  # 💡 招待を「拒否」または「解除」するアクション
   def destroy
     @relation = current_user.template_relations.find(params[:id])
     @relation.destroy
