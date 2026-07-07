@@ -52,10 +52,10 @@
 
     <div data-controller="sortable">
       <%= form.fields_for :items do |item_form| %>
-        <div class="sortable-item">
+        <div class="sortable-item"
+             <% if item_form.object.persisted? %>data-move-url="<%= move_item_path(item_form.object) %>"<% end %>>
           <span class="handle">☰</span>
           <div style="flex: 1;">
-            <%= item_form.hidden_field :position, class: "position-input" %>
             <%= item_form.label :name, "持ち物名" %>
             <%= item_form.text_field :name %>
             <% if item_form.object.persisted? %>

@@ -11,12 +11,16 @@ export default class extends Controller {
   }
 
   end(event) {
-    // ドラッグが終わったら、並び替わった要素内のすべての隠しフィールドを上から順に取得
-    const inputs = this.element.querySelectorAll(".position-input")
-    
-    // 上から順番に 1, 2, 3... と数値をリアルタイムで上書き
-    inputs.forEach((input, index) => {
-      input.value = index + 1
+    const moveUrl = event.item.dataset.moveUrl
+    if (!moveUrl) return
+
+    fetch(moveUrl, {
+      method: 'PATCH',
+      headers: {
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ position: event.newIndex })
     })
   }
 }
